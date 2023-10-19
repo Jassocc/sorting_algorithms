@@ -10,9 +10,14 @@ void bubble_sort(int *array, size_t size)
 	int swapped, temp;
 	size_t i, j;
 
+	/* iterates from start till the second last element(size - 1) */
 	for (i = 0; i < size - 1; i++)
 	{
 		swapped = 0;
+		/**
+		 * iterates through array and compares two adjacent elements
+		 * swapping them when needed
+		 */
 		for (j = 0; j < size - i - 1; j++)
 		{
 			if (array[j] > array[j + 1])
@@ -24,6 +29,9 @@ void bubble_sort(int *array, size_t size)
 				swapped = 1;
 			}
 		}
+		/**
+		 * if no swap detected it means its sorted and breaks
+		*/
 		if (!swapped)
 		{
 			break;
