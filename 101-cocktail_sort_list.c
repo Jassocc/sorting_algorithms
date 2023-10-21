@@ -3,14 +3,19 @@
 /**
  * swap_nodes - Swaps two nodes in a linked list
  * @list: Pointer to head
- * @left: left swap
- * @right: right swap
+ * @node1: 1st node
+ * @node2: 2nd node
  */
 void swap_nodes(listint_t **list, listint_t *left, listint_t *right)
 {
+
 	if (left->prev)
 	{
 		left->prev->next = right;
+	}
+	else
+	{
+		*list = right;
 	}
 	if (right->next)
 	{
@@ -20,10 +25,6 @@ void swap_nodes(listint_t **list, listint_t *left, listint_t *right)
 	right->prev = left->prev;
 	left->prev = right;
 	right->next = left;
-	if (!right->prev)
-	{
-		*list = right;
-	}
 }
 
 /**
@@ -69,7 +70,7 @@ void cocktail_sort_list(listint_t **list)
 			}
 			else
 			{
-				st = st->prev;
+			st = st->prev;
 			}
 		}
 	}
