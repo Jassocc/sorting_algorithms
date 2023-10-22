@@ -3,8 +3,8 @@
 /**
  * swap_nodes - Swaps two nodes in a linked list
  * @list: Pointer to head
- * @node1: 1st node
- * @node2: 2nd node
+ * @left: 1st node
+ * @right: 2nd node
  */
 void swap_nodes(listint_t **list, listint_t *left, listint_t *right)
 {
@@ -35,43 +35,42 @@ void swap_nodes(listint_t **list, listint_t *left, listint_t *right)
 void cocktail_sort_list(listint_t **list)
 {
 	int swap = 1;
-	listint_t *st = *list;
-	listint_t *end = NULL;
+	listint_t *st, *end;
 
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
-	while (swap)
-	{
+	st = (*list);
+	do {
 		swap = 0;
-		while (st->next != end)
+		while (st->next)
 		{
-			if (st->n > st->next->n)
+			end = st->next;
+			if (end && st->n > end->n)
 			{
-				swap_nodes(list, st, st->next);
-				print_list(*list);
+				swap_nodes(list, st, end);
 				swap = 1;
+				print_list((*list));
 			}
 			else
 			{
 				st = st->next;
 			}
 		}
-		if (!swap)
-			break;
-		swap = 0;
-		end = st;
-		while (st->prev != NULL)
+		st = st->prev;
+		while (st->prev)
 		{
-			if (st->n < st->prev->n)
+			end = st->prev;
+			if (end && st->n < end->n)
 			{
-				swap_nodes(list, st->prev, st);
-				print_list(*list);
+				swap_nodes(list, end, st);
 				swap = 1;
+				print_list((*list));
 			}
 			else
 			{
-			st = st->prev;
+				st = st->prev;
 			}
 		}
-	}
+		st = st->next;
+	} while (swap);
 }
