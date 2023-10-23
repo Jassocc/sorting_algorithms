@@ -27,9 +27,8 @@ int find_max(int *array, size_t size)
  * @size: size of array
  * @exp: current exponent
  */
-void count_sort(int *array, size_t size, int exp)
+void count_sort(int *array, size_t size, int exp, int *output)
 {
-	int *output = malloc(sizeof(int) * size);
 	int counter[10] = {0};
 	int i;
 
@@ -51,7 +50,6 @@ void count_sort(int *array, size_t size, int exp)
 		array[i] = output[i];
 	}
 	print_array(array, size);
-	free(output);
 }
 /**
  * radix_sort - sorts an array of
@@ -63,14 +61,21 @@ void radix_sort(int *array, size_t size)
 {
 	int maximum;
 	int exp;
+	int *b;
 
+	b = malloc(sizeof(int) * size);
 	maximum = find_max(array, size);
 	if (array == NULL || size < 2)
 	{
 		return;
 	}
+	if (b == NULL)
+	{
+		return;
+	}
 	for (exp = 1; maximum / exp > 0; exp *= 10)
 	{
-		count_sort(array, size, exp);
+		count_sort(array, size, exp, b);
 	}
+	free(b);
 }
