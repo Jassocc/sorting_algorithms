@@ -23,6 +23,7 @@ int find_max(int *array, size_t size)
 /**
  * count_sort - sorts array using counting
  * algorithm
+ * @output: output
  * @array: array
  * @size: size of array
  * @exp: current exponent
@@ -64,15 +65,12 @@ void radix_sort(int *array, size_t size)
 	int *b;
 
 	b = malloc(sizeof(int) * size);
+	if (array == NULL || size < 2 || b == NULL)
+	{
+		free(b);
+		return;
+	}
 	maximum = find_max(array, size);
-	if (array == NULL || size < 2)
-	{
-		return;
-	}
-	if (b == NULL)
-	{
-		return;
-	}
 	for (exp = 1; maximum / exp > 0; exp *= 10)
 	{
 		count_sort(array, size, exp, b);
