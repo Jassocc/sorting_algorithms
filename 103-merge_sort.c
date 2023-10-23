@@ -1,7 +1,4 @@
 #include "sort.h"
-#include <stdio.h>
-
-
 
 void merge_sort(int *array, size_t size)
 {
@@ -28,11 +25,21 @@ void merge_sort(int *array, size_t size)
 
     printf("Merging...\n");
     printf("[left]: ");
-    print_array(left, mid);
+    for (i = 0; (size_t)i < mid; i++)
+    {
+        printf("%d", left[i]);
+        if ((size_t)i < mid - 1)
+            printf(", ");
+    }
     printf("\n");
 
     printf("[right]: ");
-    print_array(right, size - mid);
+    for (i = 0; (size_t)i < size - mid; i++)
+    {
+        printf("%d", right[i]);
+        if ((size_t)i < size - mid - 1)
+            printf(", ");
+    }
     printf("\n");
 
     merge_sort(left, mid);
@@ -71,7 +78,12 @@ void merge_sort(int *array, size_t size)
     }
 
     printf("[Done]: ");
-    print_array(array, size);
+    for (i = 0; (size_t)i < size; i++)
+    {
+        printf("%d", array[i]);
+        if ((size_t)i < size - 1)
+            printf(", ");
+    }
     printf("\n");
 
     free(left);
