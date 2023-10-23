@@ -7,7 +7,9 @@
  */
 void swap(int *a, int *b)
 {
-	int temp = *a;
+	int temp;
+
+	temp = *a;
 	*a = *b;
 	*b = temp;
 }
@@ -25,27 +27,23 @@ int partition(int *array, int low, int high, size_t size)
 {
 	int pivot = array[high];
 	int i = low - 1;
-	int j, tmp;
+	int j;
 
 	for (j = low; j <= high - 1; j++)
 	{
 		if (array[j] < pivot)
 		{
 			i++;
-			tmp = array[i];
-			array[i] = array[j];
-			array[j] = tmp;
 			if (i != j)
 			{
+				swap(&array[i], &array[j]);
 				print_array(array, size);
 			}
 		}
 	}
-	tmp = array[i + 1];
-	array[i + 1] = array[high];
-	array[high] = tmp;
 	if (i + 1 != high)
 	{
+		swap(&array[i + 1], &array[high]);
 		print_array(array, size);
 	}
 	return (i + 1);
@@ -78,7 +76,7 @@ void quicksort(int *array, int low, int high, size_t size)
  */
 void quick_sort(int *array, size_t size)
 {
-	if (array == NULL || size < 2)
+	if (array == NULL && size < 2)
 		return;
 	quicksort(array, 0, size - 1, size);
 }
