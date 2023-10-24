@@ -4,27 +4,29 @@
  * bitonic_merge - merge two arrays
  * @array: array
  * @size: size
+ * @st: start of array
+ * @sq: sequence of array
  * @dir: sorting direction
  */
-void bitonic_merge(int *array, size_t size, int dir)
+void bitonic_merge(int *array, size_t size, size_t st, size_t sq, int dir)
 {
-	size_t k, i;
+	size_t k = sq / 2, i;
 	int temp;
 
-	if (size > 1)
+	if (sq > 1)
 	{
-		k = size / 2;
-		for (i = 0; i < k; i++)
+		for (i = st; i < st + k; i++)
 		{
-			if ((array[i] > array[i + k]) == dir)
+			if ((dir == 1 && array[i] > array[i + k]) ||
+				(dir == 0 && array[i] < array[i + k]))
 			{
 				temp = array[i];
 				array[i] = array[i + k];
 				array[i + k] = temp;
 			}
 		}
-		bitonic_merge(array, k, dir);
-		bitonic_merge(array + k, k, dir);
+		bitonic_merge(array, size, st, k, dir);
+		bitonic_merge(array, size, st + k, k, dir);
 	}
 }
 /**
@@ -32,23 +34,24 @@ void bitonic_merge(int *array, size_t size, int dir)
  * @array: array
  * @size: size
  * @dir: sorting direction
+ * @st: start of array
+ * @sq: sequence of array
  */
-void bitonic_recursive(int *array, size_t size, int dir)
+void bitonic_recursive(int *array, size_t size, size_t st, size_t sq, int dir)
 {
-	int k;
+	int k = sq / 2;
 
-	if (size > 1)
+	if (sq > 1)
 	{
-		k = size / 2;
-		printf("Merging [%ld/%ld] (%s):\n", size, size,
+		printf("Merging [%lu/%lu] (%s):\n", sq, size,
 				dir == 1 ? "UP" : "DOWN");
-		print_array(array, size);
-		bitonic_recursive(array, k, 1);
-		bitonic_recursive(array + k, k, 0);
-		bitonic_merge(array, size, dir);
-		printf("Result [%ld/%ld] (%s):\n", size, size,
+		print_array(array + st, sq);
+		bitonic_recursive(array, size, st, k, 1);
+		bitonic_recursive(array, size, st + k, k, 0);
+		bitonic_merge(array, size, st, sq, dir);
+		printf("Result [%lu/%lu] (%s):\n", sq, size,
 				dir == 1 ? "UP" : "DOWN");
-		print_array(array, size);
+		print_array(array + st, sq);
 	}
 }
 /**
@@ -63,5 +66,5 @@ void bitonic_sort(int *array, size_t size)
 	{
 		return;
 	}
-	bitonic_recursive(array, size, 1);
+	bitonic_recursive(array, size, 0, size, 1);
 }
